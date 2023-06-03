@@ -1,0 +1,27 @@
+:root {
+    --main-blue2:#93b5cf;
+    --main-pink: #edc3ae;
+    --main-red:#ca490e;
+    --main-blue: #132c33;
+    --main-white:#e6e2d5;
+    --main-grey:#799094;
+    --main-green:#6e8b74;
+    --main-green2:#83a78d;
+
+    --pg-blue:#143a52;
+    --pg-grey:#6e828a;
+    --pg--blue2:#cde3eb;
+    --pg-white:#e3eff3;
+   
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  
+  html{
+    font-size: 16px;
+  }
