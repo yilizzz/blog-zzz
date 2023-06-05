@@ -1,7 +1,7 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once  './utils/checkSessionExpiration.php';
 checkSessionExpiration();
-require_once "db/dbConfig.php";
+require_once './db/dbconfig.php';
 
 $blogID = $_SESSION['blogID']; 
 $db = new LabDB();
@@ -46,26 +46,16 @@ if($result == false){
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <?php require_once "css/require.php"; ?>
+        <?php require_once "./css/require.php"; ?>
     </head> 
 
     <body class = "blog-theme">
-    
-        <!-- <header class = "editor-info">
-            <h1>LabZZZ Blog
-            </h1>  
-        </header>
-        
-        <nav id="navbar">
-            <a href="readBlog.php" class="draw">Lire Plus</a>&nbsp;&nbsp;&nbsp;
-            <a href="blogAdmin.php" class="draw">Mon Blog</a>
-        </nav> -->
         <?php 
-        include'utils/generateHeaderAndNav.php';
+        require_once './utils/generateHeaderAndNav.php';
         echo generateHeaderAndNav('LabZZZ Blog', 'Lire Plus', 'readBlog.php', 'Mon Blog', 'blogAdmin.php');
         ?>
         <div id="del-info">
-            <h3>Confirmez: Supprimer <?= htmlentities($title) ?> ?</h3>
+            <h3>Confirmez: Supprimer <?= html_entity_decode(htmlspecialchars($title)) ?> ?</h3>
             <br>
             <form method="post">
                 <h3><input type="submit" value="Delete" name="delete"><br>

@@ -1,5 +1,5 @@
 <?php
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 session_start();
 $db = new LabDB();
 // Check the blogID
@@ -48,13 +48,13 @@ $comment = LabDB::select($db, 'tb_comment', ['time_insert', 'email','comment'], 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <?php require_once "css/require.php"; ?>
+    <?php require_once "./css/require.php"; ?>
 </head>
 
 <body class = "blog-theme">
     
     <?php 
-        include'utils/generateHeaderAndNav.php';
+        require_once './utils/generateHeaderAndNav.php';
         echo generateHeaderAndNav('Blog LabZZZ', 
                                     'Lire Plus', 
                                     'readBlog.php',
@@ -65,10 +65,10 @@ $comment = LabDB::select($db, 'tb_comment', ['time_insert', 'email','comment'], 
         <?php
         if($result){ ?> 
             <h2>
-                <?php echo htmlentities($result['title']); ?>
+                <?php echo html_entity_decode(htmlspecialchars($result['title'])); ?>
             </h2>
             <br>
-            <div class = "blog-list">
+            <div id="inner-text">
                 <?php echo $result['body']; ?>
             </div>  
             
@@ -93,7 +93,7 @@ $comment = LabDB::select($db, 'tb_comment', ['time_insert', 'email','comment'], 
                             echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$row['time_insert'].'</td>';
                         echo '</tr>';
                         echo '<tr class="list-tr" style="color:var(--main-blue)";>';
-                            echo '<td style="text-align:left" width="100%">&nbsp;&nbsp;'.htmlentities($row['comment']).'</td>';
+                            echo '<td style="text-align:left" width="100%">&nbsp;&nbsp;'.html_entity_decode(htmlspecialchars($row['comment'])).'</td>';
                         echo '</tr>';
                         
                     }
@@ -103,7 +103,7 @@ $comment = LabDB::select($db, 'tb_comment', ['time_insert', 'email','comment'], 
             }
             ?>
             <form action="oneBlog.php" method="post">
-                <textarea name="comment" id="comment" value="Laissez quelques mots..." class="auto-input" name="comment"></textarea>
+                <textarea name="comment" id="comment" placeholder="Laissez quelques mots..." class="auto-input" name="comment"></textarea>
                 <button type="submit" id="btnSave">Commenter</button>
             </form>
             

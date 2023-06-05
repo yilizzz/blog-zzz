@@ -1,9 +1,9 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once './utils/checkSessionExpiration.php';
 checkSessionExpiration();
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 
-$cgID = isset($_POST['cgID']) ? htmlspecialchars($_POST['cgID']) : '';
+$cgID = isset($_POST['cgID']) ? $_POST['cgID'] : '';
 $db = new LabDB();
 $result = LabDB::delete($db, 'tb_category', 'id = "'.$cgID.'"');
 //Execution succeed

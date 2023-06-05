@@ -1,9 +1,9 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once './utils/checkSessionExpiration.php';
 checkSessionExpiration();
 
 
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 $db = new LabDB();
 // Check the account
 if (!isset($_SESSION['userID'])) {
@@ -15,7 +15,7 @@ if (!isset($_SESSION['userID'])) {
 
 if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgID'])) {
 
-    $title = $_POST['post-title'];
+    $title = htmlspecialchars($_POST['post-title']);
     $body = $_POST['content'];
     $cg = $_POST['cgID'];
 
@@ -35,7 +35,7 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
 <html lang="fr">
 
 <head>
-    <?php require_once "css/require.php"; ?>
+    <?php require_once "./css/require.php"; ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>
@@ -75,7 +75,7 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
 <body class="blog-theme">
 
     <?php 
-    include'utils/generateHeaderAndNav.php';
+    require_once './utils/generateHeaderAndNav.php';
     echo generateHeaderAndNav('LabZZZ Blog', 'Mon Blog', 'blogAdmin.php', 'Logout', 'logOut.php');
     ?>
 
@@ -98,11 +98,11 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
             if ($result != false) {
 
                 foreach ($result as $row) {
-                    echo '<option value="' . $row['id'] . '">' . $row['cgname'] . '</option>';
+                    echo '<option value="' . $row['id'] . '">' . html_entity_decode(htmlspecialchars($row['cgname'])) . '</option>';
                     //query for the sub categories
                     $sub_result = LabDB::select($db, 'tb_category', ['id', 'cgname'], 'user_id = "' . $userID . '" AND parent = "' . $row['id'] . '"');
                     foreach ($sub_result as $sub_row) {
-                        echo '<option value="' . $sub_row['id'] . '">----' . $sub_row['cgname'] . '</option>';
+                        echo '<option value="' . $sub_row['id'] . '">----' . html_entity_decode(htmlspecialchars($sub_row['cgname'])) . '</option>';
                     }
                 }
             }
@@ -172,10 +172,7 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
             $('#btnSave').click(function() {
                 //assign the form to a hidden input
                 var content = $('#summernote').summernote('code');
-
                 $("#content").attr("value", content);
-                //$('#content-form').submit();
-
             });
         </script>
     </main>

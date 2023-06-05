@@ -1,8 +1,8 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once  './utils/checkSessionExpiration.php';
 checkSessionExpiration();
 
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 $db = new LabDB();
 // Check the account
 if (!isset($_SESSION['userID'])) {
@@ -17,7 +17,7 @@ if (!isset($_SESSION['userID'])) {
 if ($blogID != 0) {
     $result = LabDB::find($db, 'tb_post', ['body', 'title'], 'id = "' . $blogID . '"');
     if ($result != false) {
-        $title = htmlspecialchars($result['title']);
+        $title = html_entity_decode(htmlspecialchars($result['title']));
         $body = $result['body'];
     }
 }
@@ -25,7 +25,7 @@ if ($blogID != 0) {
 
 if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgID'])) {
 
-    $title = $_POST['post-title'];
+    $title = htmlspecialchars($_POST['post-title']);
     $body = $_POST['content'];
     $cg = $_POST['cgID'];
 
@@ -43,7 +43,7 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
 <html lang="fr">
 
 <head>
-    <?php require_once "css/require.php"; ?>
+    <?php require_once "./css/require.php"; ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>
@@ -68,13 +68,14 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
                 return true;
             };
         };
+        var bodyContent = <?php echo json_encode($body); ?>;
     </script>
 
 </head>
 
 <body class="blog-theme">
     <?php 
-    include'utils/generateHeaderAndNav.php';
+    require_once './utils/generateHeaderAndNav.php';
     echo generateHeaderAndNav('LabZZZ Blog', 
                                 'Mon Blog', 
                                 'blogAdmin.php', 
@@ -83,7 +84,7 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
     ?>
     <main class="content">
         <form id="content-form" action="blogEdit.php" method="post">
-            <input type="text" name="post-title" id="post-title" value="<?php echo htmlentities($title); ?>">
+            <input type="text" name="post-title" id="post-title" value="<?php echo $title; ?>">
             <br>
             <textarea id="summernote" name="editordata"></textarea><br>
             <input name="content" id="content" type="hidden">
@@ -100,11 +101,11 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
                 echo '<select name = "cgID" id="cgID">';
                 echo '<option value="0" label="Choissir une catégorie" selected="selected"></option>';
                 foreach ($result as $row) {
-                    echo '<option value="' . $row['id'] . '">' . $row['cgname'] . '</option>';
+                    echo '<option value="' . $row['id'] . '">' . html_entity_decode(htmlspecialchars($row['cgname'])) . '</option>';
                     //query for the sub categories
                     $sub_result = LabDB::select($db, 'tb_category', ['id', 'cgname'], 'user_id = "' . $userID . '" AND parent = "' . $row['id'] . '"');
                     foreach ($sub_result as $sub_row) {
-                        echo '<option value="' . $sub_row['id'] . '">----' . $sub_row['cgname'] . '</option>';
+                        echo '<option value="' . $sub_row['id'] . '">----' . html_entity_decode(htmlspecialchars($sub_row['cgname'])) . '</option>';
                     }
                 }
                 echo '</select>';
@@ -168,16 +169,14 @@ if (isset($_POST['content']) && isset($_POST['post-title']) && isset($_POST['cgI
                     });
                 }
                 // show the content in summernote
-                $('#summernote').summernote('code', '<?= $body ?>');
+                $('#summernote').summernote('code',  bodyContent);
             });
 
 
             $('#btnSave').click(function() {
                 //assign the form to a hidden input
                 var content = $('#summernote').summernote('code');
-
                 $("#content").attr("value", content);
-                //$('#content-form').submit();
 
             });
         </script>

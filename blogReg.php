@@ -3,11 +3,11 @@
 /************************************
 *   Proceed user's register datas 
 *************************************/
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 if(isset($_POST['regName']) && isset($_POST['regPW1']) && isset($_POST['regEmail'])){
-    $regName = $_POST['regName'];
-    $regPW = $_POST['regPW1'];
-    $regEmail = $_POST['regEmail'];
+    $regName = htmlspecialchars($_POST['regName']);
+    $regPW = htmlspecialchars($_POST['regPW1']);
+    $regEmail = htmlspecialchars($_POST['regEmail']);
     // Concatenate the salt plus password together
     $salt = 'labzzz2333*_';
     $store_PW = hash('md5', $salt.$regPW);

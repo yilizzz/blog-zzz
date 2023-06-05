@@ -1,8 +1,8 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once './utils/checkSessionExpiration.php';
 checkSessionExpiration();
 
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 $db = new LabDB();
 
 // Guardian: Make sure that user_id is present
@@ -18,7 +18,7 @@ if (!isset($_SESSION['userID'])) {
 <html lang="fr">
 
 <head>
-    <?php require_once "css/require.php"; ?>
+    <?php require_once "./css/require.php"; ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>
@@ -61,7 +61,7 @@ if (!isset($_SESSION['userID'])) {
 
 <body class="blog-theme">
     <?php 
-        include'utils/generateHeaderAndNav.php';
+        require_once './utils/generateHeaderAndNav.php';
         echo generateHeaderAndNav('Mes Catégories', 
                                     'Ajoutez une nouvelle category', 
                                     'cateAdd.php',
@@ -88,7 +88,7 @@ if (!isset($_SESSION['userID'])) {
                     echo '</tr>';
                     foreach ($result as $row) {
                         echo '<tr class="list-tr">';
-                        echo '<td style="text-align:left" value = "' . $row['id'] . '" >&nbsp;&nbsp;' . htmlentities($row['cgname']) . '</td>';
+                        echo '<td style="text-align:left" value = "' . $row['id'] . '" >&nbsp;&nbsp;' . html_entity_decode(htmlspecialchars($row['cgname'])) . '</td>';
                         echo '<td><button type="submit" class="edit" name="editBtn" value = "' . $row['id'] . '">Editer</button>
                                           <button type="submit" class="delete" name="dlteBtn" value = "' . $row['id'] . '">Supprimer</button></td>';
                         echo '</tr>';
@@ -97,7 +97,7 @@ if (!isset($_SESSION['userID'])) {
                         if ($sub_result != false) {
                             foreach ($sub_result as $sub_row) {
                                 echo '<tr class="list-tr">';
-                                echo '<td style="text-align:left" value = "' . $sub_row['id'] . '" >&nbsp;&nbsp;' . '----' . htmlentities($sub_row['cgname']) . '</td>';
+                                echo '<td style="text-align:left" value = "' . $sub_row['id'] . '" >&nbsp;&nbsp;' . '----' . html_entity_decode(htmlspecialchars($sub_row['cgname'])) . '</td>';
                                 echo '<td><button type="submit" class="edit" name="editBtn" value = "' . $sub_row['id'] . '">Editer</button>
                                                     <button type="submit" class="delete" name="dlteBtn" value = "' . $sub_row['id'] . '">Supprimer</button>
                                                     </td>';

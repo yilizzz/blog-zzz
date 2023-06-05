@@ -4,7 +4,7 @@
 <?php
 session_start();
 
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 $db = new LabDB();
 
 /***************************************************
@@ -21,13 +21,13 @@ if (isset($_POST['readBtn'])) {
 <html lang="fr">
 
 <head>
-    <?php require_once "css/require.php"; ?>
+    <?php require_once "./css/require.php"; ?>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body class="blog-theme">
     <?php 
-        include'utils/generateHeaderAndNav.php';
+        require_once './utils/generateHeaderAndNav.php';
         echo generateHeaderAndNav('Bonjour, voici<br>quelques grands moments', 
                                     'Mon Blog',
                                     'blogAdmin.php');
@@ -60,10 +60,10 @@ if (isset($_POST['readBtn'])) {
                 echo '</tr>';
                 foreach ($result as $row) {
                     echo '<tr class="list-tr">';
-                    echo '<td style="text-align:left" width="40%">&nbsp;&nbsp;' . $row['title'] . '</td>';
+                    echo '<td style="text-align:left" width="40%">&nbsp;&nbsp;' . html_entity_decode(htmlspecialchars($row['title'])) . '</td>';
                     echo '<td width="18%" style="font-size:0.8rem">' . $row['mailaddr'] . '</td>';
                     echo '<td width="18%" style="font-size:0.8rem">' . $row['time_update'] . '</td>';
-                    echo '<td width="15%">[' . $row['cgname'] . ']</td>';
+                    echo '<td width="15%">[' . html_entity_decode(htmlspecialchars($row['cgname'])) . ']</td>';
                     echo '<td><button type="submit" name="readBtn" value = "' . $row['id'] . '">Lire</button></td>';
                     echo '</tr>';
                 }
@@ -95,7 +95,7 @@ if (isset($_POST['readBtn'])) {
                         echo '</tr>';
                         foreach ($result as $row) {
                             echo '<tr class="list-tr">';
-                            echo '<td style="text-align:left" width="40%">&nbsp;&nbsp;' . $row['title'] . '</td>';
+                            echo '<td style="text-align:left" width="40%">&nbsp;&nbsp;' . html_entity_decode(htmlspecialchars($row['title'])) . '</td>';
                             //echo '<td width="18%" style="font-size:0.8rem">'.$row['mailaddr'].'</td>';
                             echo '<td width="40%"style="font-size:0.8rem">' . $row['time_update'] . '</td>';
                             //echo '<td width="15%">['.$row['cgname'].']</td>';

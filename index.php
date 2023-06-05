@@ -3,7 +3,7 @@
 /************************************
 *   Proceed user's login datas 
 *************************************/
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 session_start();
 if (isset($_SESSION['userID'])) {
     // user is already logged in
@@ -41,7 +41,7 @@ if(isset($_POST['userName']) && isset($_POST['userPW'])){
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <?php require_once "css/require.php"; ?>
+        <?php require_once "./css/require.php"; ?>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
         </script>
@@ -156,7 +156,7 @@ if(isset($_POST['userName']) && isset($_POST['userPW'])){
     <body class = "blog-theme">
 
         <?php 
-        include'utils/generateHeaderAndNav.php';
+        require_once './utils/generateHeaderAndNav.php';
         echo generateHeaderAndNav('Blog LabZZZ', 
                                     'Lire Plus', 
                                     'readBlog.php');
@@ -164,8 +164,8 @@ if(isset($_POST['userName']) && isset($_POST['userPW'])){
         <main id="account">
             <form class= "infor-form" id="login-form" action="index.php" method="POST">
                     <ul class="ul-infor">
-                    <li><label>Identifiant: </label><input type="text" name="userName" id="userName"></li>
-                    <li><label>Mot de passe: </label><input type="password" name="userPW" id="password"></li>
+                    <li><label>Identifiant: </label><input type="text" name="userName" id="userName" placeholder="Test123"></li>
+                    <li><label>Mot de passe: </label><input type="password" name="userPW" id="password" placeholder="Test123"></li>
                     </ul>
                     <span id="notValid" class="error"></span>
                     <button type="submit" name="submit" id="connectBtn">Je me connecte</button>

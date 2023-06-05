@@ -1,7 +1,7 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once './utils/checkSessionExpiration.php';
 checkSessionExpiration();
-require_once "db/dbConfig.php";
+require_once './db/dbconfig.php';
 
 $db = new LabDB();
 
@@ -22,13 +22,13 @@ $userID = $_SESSION['userID'];
 <html lang="fr">
 
 <head>
-    <?php require_once "css/require.php"; ?>
+    <?php require_once "./css/require.php"; ?>
 </head>
 
 <body class="blog-theme">
     <?php 
-    include'utils/generateHeaderAndNav.php';
-    echo generateHeaderAndNav('Bonjour, '.htmlentities($_SESSION['userName']), 
+    require_once './utils/generateHeaderAndNav.php';
+    echo generateHeaderAndNav('Bonjour, '.html_entity_decode(htmlspecialchars($_SESSION['userName'])), 
                                 'Lire Plus', 
                                 'readBlog.php', 
                                 'Logout', 
@@ -51,12 +51,12 @@ $userID = $_SESSION['userID'];
             echo '<option value="-1" label="Editer mon blog par mes catégories" selected="selected"></option>';
             echo '<option value="0" style="font-weight :bold;" label="Toutes mes catégories"></option>';
             foreach ($result as $row) {
-                echo '<option value="' . $row['id'] . '">' . $row['cgname'] . '</option>';
+                echo '<option value="' . $row['id'] . '">' . html_entity_decode(htmlspecialchars($row['cgname'])) . '</option>';
                 //query for the sub categories
                 $sub_result = LabDB::select($db, 'tb_category', ['id', 'cgname'], 'user_id = "' . $userID . '" AND parent = "' . $row['id'] . '"');
                 if ($sub_result != false) {
                     foreach ($sub_result as $sub_row) {
-                        echo '<option value="' . $sub_row['id'] . '">----' . $sub_row['cgname'] . '</option>';
+                        echo '<option value="' . $sub_row['id'] . '">----' . html_entity_decode(htmlspecialchars($sub_row['cgname'])) . '</option>';
                     }
                 }
             }
@@ -93,9 +93,9 @@ $userID = $_SESSION['userID'];
                 echo '</tr>';
                 foreach ($result as $row) {
                     echo '<tr class="list-tr">';
-                    echo '<td style="text-align:left" value = "' . $row['id'] . '" width="35%">&nbsp;&nbsp;' . $row['title'] . '</td>';
+                    echo '<td style="text-align:left" value = "' . $row['id'] . '" width="35%">&nbsp;&nbsp;' . html_entity_decode(htmlspecialchars($row['title'])) . '</td>';
                     echo '<td width="18%" style="font-size:0.8rem">' . $row['time_update'] . '</td>';
-                    echo '<td width="10%">[' . $row['cgname'] . ']</td>';
+                    echo '<td width="10%">[' . html_entity_decode(htmlspecialchars($row['cgname'])) . ']</td>';
                     echo '<td width="20%"><button type="submit" name="editBtn" value = "' . $row['id'] . '">Editer</button>
                                           <button type="submit" name="dlteBtn" value = "' . $row['id'] . '">Supprimer</button></td>';
                     echo '</tr>';
@@ -144,7 +144,7 @@ $userID = $_SESSION['userID'];
                         echo '</tr>';
                         foreach ($result as $row) {
                             echo '<tr class="list-tr">';
-                            echo '<td name = "title"  style="text-align:left" value = "' . $row['id'] . '" width="40%">&nbsp;&nbsp;' . $row['title'] . '</td>';
+                            echo '<td name = "title"  style="text-align:left" value = "' . $row['id'] . '" width="40%">&nbsp;&nbsp;' . html_entity_decode(htmlspecialchars($row['title'])) . '</td>';
                             echo '<td name = "time" width="20%" style="font-size:0.8rem">' . $row['time_update'] . '</td>';
                             echo '<td><button type="submit" name="editBtn" value = "' . $row['id'] . '">Editer</button>
                                                 <button type="submit" name="dlteBtn" value = "' . $row['id'] . '">Supprimer</button>

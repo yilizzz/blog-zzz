@@ -1,9 +1,9 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once './utils/checkSessionExpiration.php';
 checkSessionExpiration();
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 
-$cgID = isset($_POST['cgID']) ? htmlspecialchars($_POST['cgID']) : '';
+$cgID = isset($_POST['cgID']) ? ($_POST['cgID']) : '';
 $cgName = isset($_POST['cgName']) ? htmlspecialchars($_POST['cgName']) : '';
 
 $db = new LabDB();

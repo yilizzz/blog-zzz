@@ -1,5 +1,5 @@
 <?php
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 //check if the username already exists
 $userName = isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '';
 $db = new LabDB();

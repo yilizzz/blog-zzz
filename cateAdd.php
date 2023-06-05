@@ -1,7 +1,7 @@
 <?php
-include 'utils/checkSessionExpiration.php';
+require_once  './utils/checkSessionExpiration.php';
 checkSessionExpiration();
-include('db/dbConfig.php');
+require_once './db/dbconfig.php';
 $db = new LabDB(); 
 // Check the account
 if ( !isset($_SESSION['userID']) ) {
@@ -17,7 +17,7 @@ else{
 
 if(isset($_POST['cgName']) && isset($_POST['cgID'])){
 
-    $cgName = trim($_POST['cgName']);
+    $cgName = htmlspecialchars(trim($_POST['cgName']));
     if(strlen($cgName)<1){
         $_SESSION['message'] = "Manque d'information";
         header("Location: cateAdd.php");
@@ -43,12 +43,12 @@ if(isset($_POST['cgName']) && isset($_POST['cgID'])){
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <?php require_once "css/require.php"; ?>       
+        <?php require_once "./css/require.php"; ?>       
     </head> 
 
     <body class = "blog-theme">
         <?php 
-        include'utils/generateHeaderAndNav.php';
+        require_once './utils/generateHeaderAndNav.php';
         echo generateHeaderAndNav('LabZZZ Blog', 
                                     'Mon Blog', 
                                     'blogAdmin.php', 
@@ -74,7 +74,7 @@ if(isset($_POST['cgName']) && isset($_POST['cgID'])){
             if($result != false){
                 
                 foreach($result as $row){
-                    echo '<option value="'.$row['id'].'">'.htmlentities($row['cgname']).'</option>';
+                    echo '<option value="'.$row['id'].'">'.html_entity_decode(htmlspecialchars($row['cgname'])).'</option>';
                     }
                 
             }
