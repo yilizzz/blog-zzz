@@ -5,7 +5,6 @@
             $header .= '<p style="color:var(--main-red);">' . htmlentities($_SESSION['message']) . "</p>\n";
             unset($_SESSION["message"]);
         }
-        // $header .= '</header>';
 
         $nav = '<nav class="navbar"><a href="' . $aLink1Href . '" class="draw">' . $aLink1Text . '</a>&nbsp;&nbsp;&nbsp;';
         if ($aLink2Text && $aLink2Href) {

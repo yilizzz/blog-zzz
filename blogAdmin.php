@@ -119,7 +119,6 @@ $userID = $_SESSION['userID'];
              *button supprimer event 
              ****************************/
             if (isset($_POST['dlteBtn'])) {
-
                 $blogID = $_POST['dlteBtn'];
                 $_SESSION['blogID'] = $blogID;
                 echo "<meta http-equiv='Refresh' content='0;URL=blogDelete.php'>";

@@ -362,7 +362,10 @@ a:visited {
   padding-top: 5vh;
   color: var(--main-red);
 }
-
+#del-info button{
+  background-color: var(--main-blue);
+  color: var(--main-white);
+}
 .auto-input {
   font-family: 'Anaheim', Georgia, Helvetica, sans-serif;
   font-size: 16px;

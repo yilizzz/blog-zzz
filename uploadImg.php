@@ -9,8 +9,8 @@ if ($_FILES) {
         $ext = explode('.', $_FILES['file']['name']);
         $filename = $name . '.' . $ext[1];
 
-        //generate the directory
-        $destination = $_SERVER['DOCUMENT_ROOT'].'/yilizzz3/upload/img/' .$filename; 
+        //generate the directory, the __DIR__ magic constant returns the directory of the current file.
+        $destination = __DIR__ . '/upload/img/'.$filename;
         $location = $_FILES["file"]["tmp_name"];
 
         //move the picture to the assigned directory

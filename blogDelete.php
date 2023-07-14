@@ -13,6 +13,7 @@ if ( ! isset($_SESSION['blogID']) ) {
 }
 
 if ( isset($_POST['delete']) ) {
+
     $result = LabDB::delete($db, 'tb_post', 'id = '.$_SESSION['blogID']);
     //delete failed
     if(!$result){    
@@ -58,9 +59,10 @@ if($result == false){
             <h3>Confirmez: Supprimer <?= html_entity_decode(htmlspecialchars($title)) ?> ?</h3>
             <br>
             <form method="post">
-                <h3><input type="submit" value="Delete" name="delete"><br>
-                <a href="blogAdmin.php">Cancel</a></h3>
+                <button type="submit" value="Delete" name="delete">Supprimer</button>
             </form>
+            <br>
+            <a href="blogAdmin.php">Cancel</a>
         </div>
  
   </body>
